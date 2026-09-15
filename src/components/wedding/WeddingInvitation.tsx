@@ -41,8 +41,8 @@ const galleryImages = [
 const reveal = { initial: { opacity: 0, y: 26 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true, amount: 0.2 } };
 
 function utcStamp(event: WeddingEvent, minutes = 0) {
-  const [year, month, day] = event.date.split("-").map(Number);
-  const [hour, minute] = event.startTime.split(":").map(Number);
+  const [year = 2026, month = 1, day = 1] = event.date.split("-").map(Number);
+  const [hour = 0, minute = 0] = event.startTime.split(":").map(Number);
   const utc = new Date(Date.UTC(year, month - 1, day, hour - 5, minute - 30 + minutes));
   return utc.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
 }
@@ -151,7 +151,7 @@ export function CoupleSection() {
       <div className="couple-grid">
         {[weddingConfig.bride, weddingConfig.groom].map((person, index) => (
           <motion.article {...reveal} key={person.name} className="person">
-            <div className="portrait-frame"><PortraitPlaceholder initial={person.shortName[0]} label={person.name} /></div>
+            <div className="portrait-frame"><PortraitPlaceholder initial={person.shortName.charAt(0)} label={person.name} /></div>
             <p className="eyebrow">{index === 0 ? "The Bride" : "The Groom"}</p>
             <h3>{person.name}</h3>
             <p>{person.bio}</p>
@@ -214,6 +214,7 @@ export function EventsSection() {
 
 export function Lightbox({ index, onClose, onChange }: { index: number; onClose: () => void; onChange: (index: number) => void }) {
   const startX = useRef(0);
+  const image = galleryImages[index];
   useEffect(() => {
     const keydown = (event: KeyboardEvent) => {
       if (event.key === "Escape") onClose();
@@ -223,11 +224,12 @@ export function Lightbox({ index, onClose, onChange }: { index: number; onClose:
     window.addEventListener("keydown", keydown); document.body.style.overflow = "hidden";
     return () => { window.removeEventListener("keydown", keydown); document.body.style.overflow = ""; };
   }, [index, onChange, onClose]);
+  if (!image) return null;
   return (
-    <motion.div className="lightbox" role="dialog" aria-modal="true" aria-label="Wedding gallery" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onTouchStart={(event) => { startX.current = event.touches[0].clientX; }} onTouchEnd={(event) => { const delta = event.changedTouches[0].clientX - startX.current; if (Math.abs(delta) > 50) onChange(delta < 0 ? (index + 1) % galleryImages.length : (index - 1 + galleryImages.length) % galleryImages.length); }}>
+    <motion.div className="lightbox" role="dialog" aria-modal="true" aria-label="Wedding gallery" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onTouchStart={(event) => { const touch = event.touches.item(0); if (touch) startX.current = touch.clientX; }} onTouchEnd={(event) => { const touch = event.changedTouches.item(0); if (!touch) return; const delta = touch.clientX - startX.current; if (Math.abs(delta) > 50) onChange(delta < 0 ? (index + 1) % galleryImages.length : (index - 1 + galleryImages.length) % galleryImages.length); }}>
       <Button variant="glass" size="icon" className="lightbox-close" onClick={onClose} aria-label="Close gallery"><X /></Button>
       <Button variant="glass" size="icon" className="lightbox-prev" onClick={() => onChange((index - 1 + galleryImages.length) % galleryImages.length)} aria-label="Previous photo"><ChevronLeft /></Button>
-      <motion.img key={galleryImages[index].src} src={galleryImages[index].src} alt={galleryImages[index].alt} initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} />
+      <motion.img key={image.src} src={image.src} alt={image.alt} initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} />
       <Button variant="glass" size="icon" className="lightbox-next" onClick={() => onChange((index + 1) % galleryImages.length)} aria-label="Next photo"><ChevronRight /></Button>
       <p>{index + 1} / {galleryImages.length}</p>
     </motion.div>
@@ -247,6 +249,7 @@ export function Gallery() {
 
 export function VenueSection() {
   const main = weddingConfig.events[4];
+  if (!main) return null;
   const hotelMap = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${weddingConfig.venues.hotel.name}, ${weddingConfig.venues.hotel.address}`)}`;
   return (
     <section className="venue-section">
