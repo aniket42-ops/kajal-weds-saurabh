@@ -15,13 +15,13 @@ export const weddingConfig = {
     name: "Kajal Kedia",
     shortName: "Kajal",
     image: "/images/bride.jpg",
-    bio: "Bride introduction goes here.",
+    bio: "With the love and blessings of her family, Kajal begins a beautiful new chapter.",
   },
   groom: {
     name: "Saurabh Gupta",
     shortName: "Saurabh",
     image: "/images/groom.jpg",
-    bio: "Groom introduction goes here.",
+    bio: "Saurabh joins Kajal in celebrating a lifetime of love, laughter, and togetherness.",
   },
   branding: {
     title: "Kajal Weds Saurabh",
