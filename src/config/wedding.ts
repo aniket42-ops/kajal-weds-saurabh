@@ -1,3 +1,6 @@
+import kajalPhoto from "@/assets/kajal-kedia.jpeg.asset.json";
+import saurabhPhoto from "@/assets/saurabh-gupta.jpeg.asset.json";
+
 export type WeddingEvent = {
   id: string;
   name: string;
@@ -14,13 +17,13 @@ export const weddingConfig = {
   bride: {
     name: "Kajal Kedia",
     shortName: "Kajal",
-    image: "/images/bride.jpg",
+    image: kajalPhoto.url,
     bio: "With the love and blessings of her family, Kajal begins a beautiful new chapter.",
   },
   groom: {
     name: "Saurabh Gupta",
     shortName: "Saurabh",
-    image: "/images/groom.jpg",
+    image: saurabhPhoto.url,
     bio: "Saurabh joins Kajal in celebrating a lifetime of love, laughter, and togetherness.",
   },
   branding: {
