@@ -140,10 +140,6 @@ export function CountdownTimer() {
   );
 }
 
-function PortraitPlaceholder({ initial, label }: { initial: string; label: string }) {
-  return <div className="portrait-placeholder" role="img" aria-label={`${label} photo placeholder`}><span>{initial}</span><small>Photo coming soon</small></div>;
-}
-
 export function CoupleSection() {
   return (
     <section className="content-section couple-section">
@@ -151,7 +147,7 @@ export function CoupleSection() {
       <div className="couple-grid">
         {[weddingConfig.bride, weddingConfig.groom].map((person, index) => (
           <motion.article {...reveal} key={person.name} className="person">
-            <div className="portrait-frame"><PortraitPlaceholder initial={person.shortName.charAt(0)} label={person.name} /></div>
+            <div className="portrait-frame"><img src={person.image} alt={`${person.name}, ${index === 0 ? "the bride" : "the groom"}`} loading="lazy" /></div>
             <p className="eyebrow">{index === 0 ? "The Bride" : "The Groom"}</p>
             <h3>{person.name}</h3>
             <p>{person.bio}</p>
