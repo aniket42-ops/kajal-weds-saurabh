@@ -7,6 +7,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Download,
+  DoorOpen,
   Flower2,
   Heart,
   MapPin,
@@ -22,6 +23,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { weddingConfig, type WeddingEvent } from "@/config/wedding";
 import { submitRsvp } from "@/lib/rsvp.functions";
+import doorImage from "@/assets/door.jpeg.asset.json";
 import floralPortrait from "@/assets/wedding-floral-portrait.jpg";
 import venueImage from "@/assets/venue-illustration.jpg";
 import mehndiImage from "@/assets/gallery-mehndi.jpg";
@@ -75,21 +77,42 @@ function SectionHeading({ eyebrow, title, subtitle }: { eyebrow?: string; title:
 
 export function InvitationOpening({ onOpen }: { onOpen: () => void }) {
   const reduce = useReducedMotion();
+  const [knocks, setKnocks] = useState(0);
+  const namesRevealed = knocks >= 2;
   const item = (delay: number) => ({ initial: { opacity: 0, y: reduce ? 0 : 12 }, animate: { opacity: 1, y: 0 }, transition: { delay: reduce ? 0 : delay, duration: 0.8 } });
+  const handleKnock = () => setKnocks((current) => Math.min(current + 1, 2));
   return (
-    <motion.div className="invitation-cover" exit={{ opacity: 0, scale: reduce ? 1 : 1.025 }} transition={{ duration: 0.8 }}>
-      <motion.img src={floralPortrait} alt="" aria-hidden="true" className="cover-art" initial={{ opacity: 0, scale: reduce ? 1 : 1.05 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: reduce ? 0 : 1.8 }} />
-      <div className="cover-content">
-        <motion.p {...item(0.35)} className="eyebrow">Together with their families</motion.p>
-        <motion.p {...item(0.7)} className="cover-invite">Invite you to celebrate the wedding of</motion.p>
-        <motion.h1 {...item(1.05)} className="cover-name">KAJAL KEDIA</motion.h1>
-        <motion.span {...item(1.4)} className="cover-ampersand">&</motion.span>
-        <motion.h2 {...item(1.7)} className="cover-name">SAURABH GUPTA</motion.h2>
-        <motion.div {...item(2.05)} className="cover-mark"><span />{weddingConfig.branding.title.toUpperCase()}<span /></motion.div>
-        <motion.p {...item(2.3)} className="cover-date">13–14 DECEMBER 2026 · DARBHANGA</motion.p>
-        <motion.div {...item(2.6)}>
-          <Button variant="wedding" size="lg" onClick={onOpen}>Open Invitation <Heart /></Button>
-        </motion.div>
+    <motion.div className="invitation-cover door-cover" exit={{ opacity: 0, scale: reduce ? 1 : 1.035 }} transition={{ duration: 0.9 }}>
+      <motion.img src={doorImage.url} alt="White floral ribbons decorating a wooden doorway" className="door-art" initial={{ opacity: 0, scale: reduce ? 1 : 1.04 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: reduce ? 0 : 1.5 }} />
+      <div className="door-vignette" aria-hidden="true" />
+      <div className="door-scene">
+        <div className="door-frame" aria-hidden="true"><span /><span /></div>
+        <div className="door-content">
+          <motion.p {...item(0.25)} className="door-kicker">A little knock opens a lifetime</motion.p>
+          <AnimatePresence mode="wait">
+            {!namesRevealed ? (
+              <motion.div key="knock" className="knock-prompt" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, y: -12 }}>
+                <p className="door-invite">You are warmly invited</p>
+                <p className="knock-count" aria-live="polite">{knocks === 0 ? "Knock on the door to enter" : "One more knock…"}</p>
+                <motion.button type="button" className={`door-knock ${knocks > 0 ? "is-knocking" : ""}`} onClick={handleKnock} aria-label={knocks === 0 ? "Knock on the wedding door" : "Knock one more time on the wedding door"} animate={knocks > 0 && !reduce ? { x: [0, -5, 5, -3, 3, 0] } : undefined} transition={{ duration: 0.35 }}>
+                  <span className="door-knock-ring" aria-hidden="true" />
+                  <span className="door-knock-label">Knock</span>
+                </motion.button>
+                <p className="door-hint">Tap twice to reveal the names</p>
+              </motion.div>
+            ) : (
+              <motion.div key="names" className="door-names" initial={{ opacity: 0, y: reduce ? 0 : 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduce ? 0 : 0.8 }}>
+                <p className="door-invite">The door is open to love</p>
+                <h1 className="door-name">KAJAL KEDIA</h1>
+                <span className="door-ampersand">&amp;</span>
+                <h2 className="door-name">SAURABH GUPTA</h2>
+                <div className="door-mark"><span />{weddingConfig.branding.title.toUpperCase()}<span /></div>
+                <p className="door-date">13–14 DECEMBER 2026 · DARBHANGA</p>
+                <Button variant="wedding" size="lg" onClick={onOpen}>Open Invitation <DoorOpen /></Button>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
     </motion.div>
   );

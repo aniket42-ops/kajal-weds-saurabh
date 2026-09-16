@@ -197,6 +197,69 @@
 
   .cover-art { opacity: 0.9; }
 
+  .door-art {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .door-vignette {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, color-mix(in oklch, var(--brown) 18%, transparent), color-mix(in oklch, var(--brown) 42%, transparent) 72%, color-mix(in oklch, var(--brown) 56%, transparent));
+  }
+
+  .door-scene {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    width: min(100%, 42rem);
+    min-height: min(92dvh, 52rem);
+    place-items: center;
+    padding: 1rem;
+  }
+
+  .door-frame {
+    position: absolute;
+    inset: 0.75rem;
+    border: 1px solid color-mix(in oklch, var(--ivory) 72%, transparent);
+    outline: 1px solid color-mix(in oklch, var(--gold) 70%, transparent);
+    outline-offset: -0.55rem;
+    pointer-events: none;
+  }
+
+  .door-frame span { position: absolute; top: 1.75rem; width: 4rem; height: 4rem; border-top: 2px solid var(--gold); }
+  .door-frame span:first-child { left: 1.75rem; border-left: 2px solid var(--gold); }
+  .door-frame span:last-child { right: 1.75rem; border-right: 2px solid var(--gold); }
+
+  .door-content {
+    width: min(100%, 29rem);
+    padding: 4.5rem 1.35rem 3.5rem;
+    color: var(--ivory);
+    text-align: center;
+    text-shadow: 0 2px 18px color-mix(in oklch, var(--brown) 70%, transparent);
+  }
+
+  .door-kicker { color: var(--ivory); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; }
+  .knock-prompt, .door-names { display: flex; flex-direction: column; align-items: center; }
+  .door-invite { margin-top: 1.2rem; color: var(--ivory); font-family: "Cormorant Garamond", serif; font-size: 1.5rem; }
+  .knock-count { min-height: 1.5rem; margin-top: 0.35rem; color: var(--cream); font-size: 0.78rem; letter-spacing: 0.06em; }
+  .door-knock { position: relative; display: grid; width: 8.5rem; aspect-ratio: 1; place-items: center; margin: 2rem auto 0; border: 1px solid color-mix(in oklch, var(--gold) 85%, transparent); border-radius: 50%; background: color-mix(in oklch, var(--brown) 48%, transparent); color: var(--ivory); cursor: pointer; box-shadow: 0 12px 35px color-mix(in oklch, var(--brown) 42%, transparent), inset 0 0 0 0.45rem color-mix(in oklch, var(--ivory) 12%, transparent); transition: background 220ms ease, transform 220ms ease; }
+  .door-knock:hover { background: color-mix(in oklch, var(--rose) 68%, transparent); transform: scale(1.03); }
+  .door-knock:focus-visible { outline: 2px solid var(--ivory); outline-offset: 0.35rem; }
+  .door-knock-ring { position: absolute; inset: 0.85rem; border: 1px solid color-mix(in oklch, var(--gold) 80%, transparent); border-radius: 50%; }
+  .door-knock-label { position: relative; font-family: "Cormorant Garamond", serif; font-size: 1.45rem; }
+  .door-hint { margin-top: 1rem; color: var(--cream); font-size: 0.7rem; letter-spacing: 0.08em; }
+  .door-name { color: var(--ivory); font-size: clamp(2.65rem, 12vw, 4.8rem); line-height: 0.9; }
+  .door-name:first-of-type { margin-top: 1.8rem; }
+  .door-ampersand { margin: 0.45rem 0; color: var(--gold); font-family: "Cormorant Garamond", serif; font-size: 2.4rem; font-style: italic; line-height: 1; }
+  .door-mark { display: flex; width: 100%; align-items: center; gap: 0.7rem; margin-top: 1.5rem; color: var(--cream); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.15em; }
+  .door-mark span { height: 1px; flex: 1; background: var(--gold); }
+  .door-date { margin: 0.9rem 0 1.5rem; color: var(--cream); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.13em; }
+
   .cover-content {
     position: relative;
     z-index: 1;
@@ -392,8 +455,9 @@
 }
 
 @media (max-width: 380px) {
-  .cover-content { min-height: calc(100dvh - 1rem); padding-inline: 0.8rem; }
-  .cover-name { font-size: 2.25rem; }
+  .door-scene { min-height: calc(100dvh - 1rem); padding-inline: 0.5rem; }
+  .door-content { padding-inline: 0.85rem; }
+  .door-name { font-size: 2.55rem; }
   .content-section { padding-inline: 1rem; }
   .event-card { padding-inline: 1rem; }
   .music-player span { display: none; }
