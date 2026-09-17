@@ -23,7 +23,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { weddingConfig, type WeddingEvent } from "@/config/wedding";
 import { submitRsvp } from "@/lib/rsvp.functions";
-import doorImage from "@/assets/door.jpeg.asset.json";
+import doorImage from "@/assets/wedding-door-illustration.jpg.asset.json";
 import floralPortrait from "@/assets/wedding-floral-portrait.jpg";
 import venueImage from "@/assets/venue-illustration.jpg";
 import mehndiImage from "@/assets/gallery-mehndi.jpg";
@@ -82,7 +82,7 @@ export function InvitationOpening({ onOpen }: { onOpen: () => void }) {
   const handleKnock = () => setKnocked(true);
   return (
     <motion.div className="invitation-cover door-cover" exit={{ opacity: 0, scale: reduce ? 1 : 1.035 }} transition={{ duration: 0.9 }}>
-      <motion.img src={doorImage.url} alt="White floral ribbons decorating a wooden doorway" className="door-art" initial={{ opacity: 0, scale: reduce ? 1 : 1.04 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: reduce ? 0 : 1.5 }} />
+      <motion.img src={doorImage.url} alt="Ornate golden-trimmed wooden Indian wedding doors decorated with ivory and blush flower garlands, lanterns, and fairy lights" className="door-art" initial={{ opacity: 0, scale: reduce ? 1 : 1.04 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: reduce ? 0 : 1.5 }} />
       <div className="door-vignette" aria-hidden="true" />
       <div className="door-scene">
         <div className="door-frame" aria-hidden="true"><span /><span /></div>
