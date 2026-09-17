@@ -23,7 +23,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { weddingConfig, type WeddingEvent } from "@/config/wedding";
 import { submitRsvp } from "@/lib/rsvp.functions";
-import doorImage from "@/assets/door.jpeg.asset.json";
+import doorImage from "@/assets/wedding-door-illustration.jpg.asset.json";
 import floralPortrait from "@/assets/wedding-floral-portrait.jpg";
 import venueImage from "@/assets/venue-illustration.jpg";
 import mehndiImage from "@/assets/gallery-mehndi.jpg";
