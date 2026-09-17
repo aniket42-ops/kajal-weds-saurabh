@@ -209,8 +209,11 @@
   .door-vignette {
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, color-mix(in oklch, var(--brown) 18%, transparent), color-mix(in oklch, var(--brown) 42%, transparent) 72%, color-mix(in oklch, var(--brown) 56%, transparent));
+    background:
+      radial-gradient(ellipse at center 58%, color-mix(in oklch, var(--brown) 52%, transparent) 0%, color-mix(in oklch, var(--brown) 28%, transparent) 45%, transparent 72%),
+      linear-gradient(180deg, color-mix(in oklch, var(--brown) 22%, transparent), color-mix(in oklch, var(--brown) 48%, transparent) 62%, color-mix(in oklch, var(--brown) 64%, transparent));
   }
+
 
   .door-scene {
     position: relative;
