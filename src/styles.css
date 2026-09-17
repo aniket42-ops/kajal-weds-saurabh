@@ -240,25 +240,38 @@
     padding: 4.5rem 1.35rem 3.5rem;
     color: var(--ivory);
     text-align: center;
-    text-shadow: 0 2px 18px color-mix(in oklch, var(--brown) 70%, transparent);
+    text-shadow:
+      0 1px 0 color-mix(in oklch, var(--brown) 80%, transparent),
+      0 2px 4px color-mix(in oklch, var(--brown) 60%, transparent),
+      0 6px 18px color-mix(in oklch, var(--brown) 55%, transparent),
+      0 14px 36px color-mix(in oklch, var(--brown) 45%, transparent);
   }
 
-  .door-kicker { color: var(--ivory); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; }
+  .door-kicker { color: var(--ivory); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; text-shadow: 0 1px 3px color-mix(in oklch, var(--brown) 70%, transparent), 0 3px 10px color-mix(in oklch, var(--brown) 55%, transparent); }
   .knock-prompt, .door-names { display: flex; flex-direction: column; align-items: center; }
-  .door-invite { margin-top: 1.2rem; color: var(--ivory); font-family: "Cormorant Garamond", serif; font-size: 1.5rem; }
-  .knock-count { min-height: 1.5rem; margin-top: 0.35rem; color: var(--cream); font-size: 0.78rem; letter-spacing: 0.06em; }
-  .door-knock { position: relative; display: grid; width: 8.5rem; aspect-ratio: 1; place-items: center; margin: 2rem auto 0; border: 1px solid color-mix(in oklch, var(--gold) 85%, transparent); border-radius: 50%; background: color-mix(in oklch, var(--brown) 48%, transparent); color: var(--ivory); cursor: pointer; box-shadow: 0 12px 35px color-mix(in oklch, var(--brown) 42%, transparent), inset 0 0 0 0.45rem color-mix(in oklch, var(--ivory) 12%, transparent); transition: background 220ms ease, transform 220ms ease; }
+  .door-invite { margin-top: 1.2rem; color: var(--ivory); font-family: "Cormorant Garamond", serif; font-size: 1.5rem; text-shadow: 0 1px 3px color-mix(in oklch, var(--brown) 75%, transparent), 0 4px 14px color-mix(in oklch, var(--brown) 60%, transparent); }
+  .knock-count { min-height: 1.5rem; margin-top: 0.35rem; color: var(--cream); font-size: 0.78rem; letter-spacing: 0.06em; text-shadow: 0 1px 3px color-mix(in oklch, var(--brown) 70%, transparent); }
+  .door-knock { position: relative; display: grid; width: 8.5rem; aspect-ratio: 1; place-items: center; margin: 2rem auto 0; border: 1px solid color-mix(in oklch, var(--gold) 85%, transparent); border-radius: 50%; background: color-mix(in oklch, var(--brown) 58%, transparent); color: var(--ivory); cursor: pointer; box-shadow: 0 12px 35px color-mix(in oklch, var(--brown) 42%, transparent), inset 0 0 0 0.45rem color-mix(in oklch, var(--ivory) 12%, transparent); transition: background 220ms ease, transform 220ms ease; }
   .door-knock:hover { background: color-mix(in oklch, var(--rose) 68%, transparent); transform: scale(1.03); }
   .door-knock:focus-visible { outline: 2px solid var(--ivory); outline-offset: 0.35rem; }
   .door-knock-ring { position: absolute; inset: 0.85rem; border: 1px solid color-mix(in oklch, var(--gold) 80%, transparent); border-radius: 50%; }
   .door-knock-label { position: relative; font-family: "Cormorant Garamond", serif; font-size: 1.45rem; }
-  .door-hint { margin-top: 1rem; color: var(--cream); font-size: 0.7rem; letter-spacing: 0.08em; }
-  .door-name { color: var(--ivory); font-size: clamp(2.65rem, 12vw, 4.8rem); line-height: 0.9; }
-  .door-name:first-of-type { margin-top: 1.8rem; }
-  .door-ampersand { margin: 0.45rem 0; color: var(--gold); font-family: "Cormorant Garamond", serif; font-size: 2.4rem; font-style: italic; line-height: 1; }
-  .door-mark { display: flex; width: 100%; align-items: center; gap: 0.7rem; margin-top: 1.5rem; color: var(--cream); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.15em; }
+  .door-hint { margin-top: 1rem; color: var(--cream); font-size: 0.7rem; letter-spacing: 0.08em; text-shadow: 0 1px 3px color-mix(in oklch, var(--brown) 70%, transparent); }
+  .door-names {
+    width: 100%;
+    padding: 1.25rem 0.5rem;
+    border-radius: var(--radius-lg);
+    background: linear-gradient(180deg, color-mix(in oklch, var(--brown) 28%, transparent), color-mix(in oklch, var(--brown) 42%, transparent));
+    box-shadow: inset 0 0 60px color-mix(in oklch, var(--brown) 35%, transparent), 0 18px 50px color-mix(in oklch, var(--brown) 28%, transparent);
+    backdrop-filter: blur(1px);
+  }
+  .door-name { color: var(--ivory); font-size: clamp(2.65rem, 12vw, 4.8rem); line-height: 0.92; font-weight: 600; letter-spacing: 0.02em; text-shadow: 0 1px 0 color-mix(in oklch, var(--brown) 80%, transparent), 0 2px 4px color-mix(in oklch, var(--brown) 65%, transparent), 0 6px 14px color-mix(in oklch, var(--brown) 55%, transparent), 0 12px 30px color-mix(in oklch, var(--brown) 50%, transparent); }
+  .door-name:first-of-type { margin-top: 0.2rem; }
+  .door-ampersand { margin: 0.45rem 0; color: var(--gold); font-family: "Cormorant Garamond", serif; font-size: 2.4rem; font-style: italic; line-height: 1; text-shadow: 0 1px 3px color-mix(in oklch, var(--brown) 80%, transparent), 0 5px 14px color-mix(in oklch, var(--brown) 60%, transparent); }
+  .door-mark { display: flex; width: 100%; align-items: center; gap: 0.7rem; margin-top: 1.5rem; color: var(--cream); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.15em; text-shadow: 0 1px 3px color-mix(in oklch, var(--brown) 75%, transparent); }
   .door-mark span { height: 1px; flex: 1; background: var(--gold); }
-  .door-date { margin: 0.9rem 0 1.5rem; color: var(--cream); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.13em; }
+  .door-date { margin: 0.9rem 0 1.5rem; color: var(--cream); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.13em; text-shadow: 0 1px 3px color-mix(in oklch, var(--brown) 75%, transparent); }
+
 
   .cover-content {
     position: relative;
