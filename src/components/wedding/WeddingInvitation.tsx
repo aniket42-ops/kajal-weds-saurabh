@@ -93,7 +93,7 @@ export function InvitationOpening({ onOpen }: { onOpen: () => void }) {
               <motion.div key="knock" className="knock-prompt" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, y: -12 }}>
                 <p className="door-invite">You are warmly invited</p>
                 <p className="knock-count" aria-live="polite">Knock on the door to enter</p>
-                <motion.button type="button" className="door-knock" onClick={handleKnock} aria-label="Knock on the wedding door" whileTap={reduce ? undefined : { scale: 0.95 }} transition={{ duration: 0.15 }}>
+                <motion.button type="button" className="door-knock" onClick={handleKnock} aria-label="Knock on the wedding door" {...(!reduce ? { whileTap: { scale: 0.95 } } : {})} transition={{ duration: 0.15 }}>
                   <span className="door-knock-ring" aria-hidden="true" />
                   <span className="door-knock-label">Knock</span>
                 </motion.button>
