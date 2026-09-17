@@ -77,10 +77,9 @@ function SectionHeading({ eyebrow, title, subtitle }: { eyebrow?: string; title:
 
 export function InvitationOpening({ onOpen }: { onOpen: () => void }) {
   const reduce = useReducedMotion();
-  const [knocks, setKnocks] = useState(0);
-  const namesRevealed = knocks >= 2;
+  const [knocked, setKnocked] = useState(false);
   const item = (delay: number) => ({ initial: { opacity: 0, y: reduce ? 0 : 12 }, animate: { opacity: 1, y: 0 }, transition: { delay: reduce ? 0 : delay, duration: 0.8 } });
-  const handleKnock = () => setKnocks((current) => Math.min(current + 1, 2));
+  const handleKnock = () => setKnocked(true);
   return (
     <motion.div className="invitation-cover door-cover" exit={{ opacity: 0, scale: reduce ? 1 : 1.035 }} transition={{ duration: 0.9 }}>
       <motion.img src={doorImage.url} alt="White floral ribbons decorating a wooden doorway" className="door-art" initial={{ opacity: 0, scale: reduce ? 1 : 1.04 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: reduce ? 0 : 1.5 }} />
@@ -90,15 +89,15 @@ export function InvitationOpening({ onOpen }: { onOpen: () => void }) {
         <div className="door-content">
           <motion.p {...item(0.25)} className="door-kicker">A little knock opens a lifetime</motion.p>
           <AnimatePresence mode="wait">
-            {!namesRevealed ? (
+            {!knocked ? (
               <motion.div key="knock" className="knock-prompt" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, y: -12 }}>
                 <p className="door-invite">You are warmly invited</p>
-                <p className="knock-count" aria-live="polite">{knocks === 0 ? "Knock on the door to enter" : "One more knock…"}</p>
-                <motion.button type="button" className={`door-knock ${knocks > 0 ? "is-knocking" : ""}`} onClick={handleKnock} aria-label={knocks === 0 ? "Knock on the wedding door" : "Knock one more time on the wedding door"} {...(knocks > 0 && !reduce ? { animate: { x: [0, -5, 5, -3, 3, 0] } } : {})} transition={{ duration: 0.35 }}>
+                <p className="knock-count" aria-live="polite">Knock on the door to enter</p>
+                <motion.button type="button" className="door-knock" onClick={handleKnock} aria-label="Knock on the wedding door" {...(!reduce ? { whileTap: { scale: 0.95 } } : {})} transition={{ duration: 0.15 }}>
                   <span className="door-knock-ring" aria-hidden="true" />
                   <span className="door-knock-label">Knock</span>
                 </motion.button>
-                <p className="door-hint">Tap twice to reveal the names</p>
+                <p className="door-hint">Tap to reveal the names</p>
               </motion.div>
             ) : (
               <motion.div key="names" className="door-names" initial={{ opacity: 0, y: reduce ? 0 : 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduce ? 0 : 0.8 }}>
