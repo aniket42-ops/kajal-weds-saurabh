@@ -1,0 +1,4 @@
+- [ ] Remove RSVP section from the invitation
+- [ ] Add slow auto-scroll with a visible pause/resume control
+- [ ] Replace placeholder audio with an original slow wedding instrumental
+- [ ] Verify mobile and desktop behavior, build health, and audio asset delivery
