@@ -1,5 +1,4 @@
-import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
-import { useServerFn } from "@tanstack/react-start";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import {
   CalendarDays,
@@ -14,7 +13,6 @@ import {
   Music2,
   Pause,
   Play,
-  Send,
   Share2,
   Sparkles,
   VolumeX,
@@ -22,7 +20,6 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { weddingConfig, type WeddingEvent } from "@/config/wedding";
-import { submitRsvp } from "@/lib/rsvp.functions";
 import doorImage from "@/assets/wedding-door-illustration.jpg.asset.json";
 import floralPortrait from "@/assets/wedding-floral-portrait.jpg";
 import venueImage from "@/assets/venue-illustration.jpg";
@@ -277,27 +274,6 @@ export function VenueSection() {
   );
 }
 
-export function RSVPForm() {
-  const submit = useServerFn(submitRsvp);
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
-  const [error, setError] = useState("");
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault(); setStatus("loading"); setError("");
-    const form = new FormData(event.currentTarget);
-    const guestName = String(form.get("guestName") ?? "").trim();
-    const contact = String(form.get("contact") ?? "").trim();
-    const guestCount = Number(form.get("guestCount"));
-    const attendance = String(form.get("attendance"));
-    const message = String(form.get("message") ?? "").trim();
-    if (!guestName || contact.length < 3 || guestCount < 1 || guestCount > 20 || !["attending", "not-attending"].includes(attendance)) { setError("Please complete all required fields."); setStatus("error"); return; }
-    try { await submit({ data: { guestName, contact, guestCount, attendance: attendance as "attending" | "not-attending", message } }); setStatus("success"); event.currentTarget.reset(); }
-    catch { setError("We couldn't save your response. Please try again."); setStatus("error"); }
-  };
-  return (
-    <section className="content-section rsvp-section"><SectionHeading title="YOUR PRESENCE MEANS THE WORLD TO US" /><motion.form {...reveal} onSubmit={handleSubmit} className="rsvp-form"><label>Guest name <input name="guestName" required maxLength={100} autoComplete="name" /></label><label>Phone or email <input name="contact" required minLength={3} maxLength={255} autoComplete="email" /></label><label>Number of guests <input name="guestCount" type="number" required min={1} max={20} defaultValue={1} /></label><fieldset><legend>Will you be joining us?</legend><label><input type="radio" name="attendance" value="attending" required /> Joyfully attending</label><label><input type="radio" name="attendance" value="not-attending" required /> Regretfully unable</label></fieldset><label>Your message <textarea name="message" maxLength={1000} rows={4} /></label><Button variant="wedding" size="lg" type="submit" disabled={status === "loading"}>{status === "loading" ? "Sending…" : "Send RSVP"}<Send /></Button><div className="form-status" aria-live="polite">{status === "success" && <p className="success">Thank you — your response has been received with love.</p>}{status === "error" && <p className="error">{error}</p>}</div></motion.form></section>
-  );
-}
-
 export function WhatsAppShare() {
   const share = () => { const url = window.location.href; window.open(`https://wa.me/?text=${encodeURIComponent(`${weddingConfig.sharing.message}\n\n${url}`)}`, "_blank", "noopener,noreferrer"); };
   return <Button variant="wedding" size="lg" onClick={share}><Share2 /> Share Invitation</Button>;
@@ -313,6 +289,50 @@ export function MusicPlayer({ shouldPlay }: { shouldPlay: boolean }) {
   return <div className="music-player"><audio ref={audio} src={weddingConfig.music.src} loop preload="none" onError={() => { setAvailable(false); setPlaying(false); }} /><Button variant="floating" size="icon" onClick={toggle} aria-label={available ? (playing ? "Pause music" : "Play music") : "Music unavailable"} aria-pressed={playing} disabled={!available}>{!available ? <VolumeX /> : playing ? <Pause /> : <Play />}</Button><span>{available ? (playing ? "Music playing" : "Play music") : "Music unavailable"}</span></div>;
 }
 
+export function AutoScrollControl({ active }: { active: boolean }) {
+  const reduce = useReducedMotion();
+  const [paused, setPaused] = useState(false);
+  const [started, setStarted] = useState(false);
+  const frame = useRef<number | null>(null);
+  const lastTime = useRef<number | null>(null);
+
+  useEffect(() => {
+    if (!active || reduce) return;
+    const timer = window.setTimeout(() => setStarted(true), 1600);
+    return () => window.clearTimeout(timer);
+  }, [active, reduce]);
+
+  useEffect(() => {
+    if (!active || reduce || paused || !started) {
+      if (frame.current !== null) window.cancelAnimationFrame(frame.current);
+      frame.current = null;
+      lastTime.current = null;
+      return;
+    }
+
+    const scroll = (time: number) => {
+      if (lastTime.current === null) lastTime.current = time;
+      const elapsed = Math.min(time - lastTime.current, 80);
+      lastTime.current = time;
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      if (window.scrollY >= maxScroll - 2) {
+        setPaused(true);
+        return;
+      }
+      window.scrollBy(0, (18 * elapsed) / 1000);
+      frame.current = window.requestAnimationFrame(scroll);
+    };
+
+    frame.current = window.requestAnimationFrame(scroll);
+    return () => {
+      if (frame.current !== null) window.cancelAnimationFrame(frame.current);
+    };
+  }, [active, paused, reduce, started]);
+
+  if (!active || reduce) return null;
+  return <div className="auto-scroll-control"><Button variant="glass" size="sm" onClick={() => setPaused((value) => !value)} aria-pressed={paused}>{paused ? <Play /> : <Pause />}<span>{paused ? "Resume scroll" : "Pause scroll"}</span></Button></div>;
+}
+
 export function ClosingSection() {
   return <section className="closing-section"><img src={floralPortrait} alt="" aria-hidden="true" loading="lazy" width={1280} height={1600} /><motion.div {...reveal}><Heart className="mx-auto size-7 text-rose" fill="currentColor" /><p>Your presence is the greatest gift.</p><p>We look forward to celebrating with you.</p><h2>{weddingConfig.branding.title}</h2><p className="closing-date">13–14 DECEMBER 2026</p><p className="with-love">With love,<br /><strong>THE FAMILIES</strong></p><WhatsAppShare /></motion.div></section>;
 }
@@ -320,5 +340,5 @@ export function ClosingSection() {
 export default function WeddingInvitation() {
   const [opened, setOpened] = useState(false);
   const open = () => { setOpened(true); window.setTimeout(() => document.getElementById("welcome")?.scrollIntoView({ behavior: "smooth" }), 700); };
-  return <><AnimatePresence>{!opened && <InvitationOpening onOpen={open} />}</AnimatePresence><main aria-hidden={!opened} className={opened ? "invitation-main is-open" : "invitation-main"}><HeroSection /><CountdownTimer /><CoupleSection /><LoveStory /><EventsSection /><Gallery /><VenueSection /><RSVPForm /><ClosingSection /></main><MusicPlayer shouldPlay={opened} /></>;
+  return <><AnimatePresence>{!opened && <InvitationOpening onOpen={open} />}</AnimatePresence><main aria-hidden={!opened} className={opened ? "invitation-main is-open" : "invitation-main"}><HeroSection /><CountdownTimer /><CoupleSection /><LoveStory /><EventsSection /><Gallery /><VenueSection /><ClosingSection /></main><AutoScrollControl active={opened} /><MusicPlayer shouldPlay={opened} /></>;
 }
