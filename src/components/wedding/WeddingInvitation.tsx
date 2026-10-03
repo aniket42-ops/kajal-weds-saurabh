@@ -10,7 +10,6 @@ import {
   Flower2,
   Heart,
   MapPin,
-  Music2,
   Pause,
   Play,
   Share2,

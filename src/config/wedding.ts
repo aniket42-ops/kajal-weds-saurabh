@@ -1,5 +1,6 @@
 import kajalPhoto from "@/assets/kajal-kedia.jpeg.asset.json";
 import saurabhPhoto from "@/assets/saurabh-gupta.jpeg.asset.json";
+import weddingInstrumental from "@/assets/wedding-instrumental.mp3.asset.json";
 
 export type WeddingEvent = {
   id: string;
@@ -102,7 +103,7 @@ export const weddingConfig = {
     },
   ] satisfies WeddingEvent[],
   story: ["The First Meeting", "The First Conversation", "The Beginning of Forever", "The Wedding Day"],
-  music: { enabled: true, src: "/audio/wedding-song.mp3" },
+  music: { enabled: true, src: weddingInstrumental.url },
   sharing: {
     message:
       "You're invited to celebrate the wedding of Kajal Kedia & Saurabh Gupta 💍\n\nJoin us on 13–14 December 2026 in Darbhanga.\n\nWe can't wait to celebrate with you!",
