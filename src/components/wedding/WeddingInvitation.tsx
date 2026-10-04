@@ -294,6 +294,7 @@ export function AutoScrollControl({ active }: { active: boolean }) {
   const [started, setStarted] = useState(false);
   const frame = useRef<number | null>(null);
   const lastTime = useRef<number | null>(null);
+  const scrollPosition = useRef(0);
 
   useEffect(() => {
     if (!active || reduce) return;
@@ -314,14 +315,17 @@ export function AutoScrollControl({ active }: { active: boolean }) {
       const elapsed = Math.min(time - lastTime.current, 80);
       lastTime.current = time;
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-      if (window.scrollY >= maxScroll - 2) {
+      scrollPosition.current = Math.max(scrollPosition.current, window.scrollY);
+      if (scrollPosition.current >= maxScroll - 2) {
         setPaused(true);
         return;
       }
-      window.scrollBy(0, (18 * elapsed) / 1000);
+      scrollPosition.current = Math.min(maxScroll, scrollPosition.current + (18 * elapsed) / 1000);
+      window.scrollTo(0, scrollPosition.current);
       frame.current = window.requestAnimationFrame(scroll);
     };
 
+    scrollPosition.current = window.scrollY;
     frame.current = window.requestAnimationFrame(scroll);
     return () => {
       if (frame.current !== null) window.cancelAnimationFrame(frame.current);
