@@ -418,7 +418,8 @@
   .venue-content > p svg { width: 1.15rem; flex: none; }
   .venue-note { max-width: 34rem; margin-top: 1rem; color: var(--cream); }
   .venue-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; margin-top: 1.8rem; }
-  .venue-actions .calendar-actions a { background: transparent; color: var(--ivory); }
+  .venue-actions .calendar-actions a { background: transparent !important; border-color: color-mix(in oklch, var(--gold) 55%, transparent) !important; color: var(--ivory) !important; box-shadow: none !important; }
+  .venue-actions .calendar-actions a:hover { background: color-mix(in oklch, var(--ivory) 12%, transparent) !important; color: var(--ivory) !important; }
   .home-note { display: flex; max-width: 34rem; flex-direction: column; margin-top: 2rem; border-top: 1px solid color-mix(in oklch, var(--gold) 65%, transparent); padding-top: 1rem; color: var(--cream); }
   .home-note strong { color: var(--gold); font-family: "Cormorant Garamond", serif; font-size: 1.25rem; }
 
