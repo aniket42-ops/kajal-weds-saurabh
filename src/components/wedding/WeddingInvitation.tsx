@@ -153,7 +153,7 @@ export function CountdownTimer() {
           ))}
         </motion.div>
       )}
-      <p className="countdown-target">Varmala · 14 December 2026 · 9:00 PM IST</p>
+      <p className="countdown-target">Engagement & Varmala · 14 December 2026 · 9:00 PM IST</p>
     </section>
   );
 }
