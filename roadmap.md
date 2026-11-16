@@ -2,3 +2,4 @@
 - [x] Add slow auto-scroll with a visible pause/resume control
 - [x] Replace placeholder audio with an original slow wedding instrumental
 - [x] Verify mobile and desktop behavior, build health, and audio asset delivery
+- [x] Add bride and groom parents to the invitation closing section

@@ -27,6 +27,10 @@ export const weddingConfig = {
     image: saurabhPhoto.url,
     bio: "Saurabh joins Kajal in celebrating a lifetime of love, laughter, and togetherness.",
   },
+  parents: {
+    bride: { father: "Pradeep Kumar Kedia", mother: "Radha Devi" },
+    groom: { father: "Arjun Prasad Gupta", mother: "Sunita Gupta" },
+  },
   branding: {
     title: "Kajal Weds Saurabh",
     perspective: "bride-side",
