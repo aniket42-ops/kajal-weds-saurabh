@@ -13,7 +13,6 @@ import {
   Pause,
   Play,
   Share2,
-  Sparkles,
   VolumeX,
   X,
 } from "lucide-react";
@@ -210,11 +209,10 @@ export function CalendarButton({ event, compact = false }: { event: WeddingEvent
   );
 }
 
-export function EventCard({ event, featured }: { event: WeddingEvent; featured?: boolean }) {
+export function EventCard({ event }: { event: WeddingEvent }) {
   const mapUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${event.venue}, ${event.address}`)}`;
   return (
-    <motion.article {...reveal} className={`event-card ${featured ? "featured" : ""}`}>
-      {featured && <p className="event-featured"><Sparkles /> Main celebration</p>}
+    <motion.article {...reveal} className="event-card">
       <p className="event-number">{String(weddingConfig.events.findIndex((item) => item.id === event.id) + 1).padStart(2, "0")}</p>
       <h3>{event.name}</h3>
       <p className="event-date">{event.displayDate}<br /><strong>{event.time}</strong></p>
@@ -227,7 +225,7 @@ export function EventCard({ event, featured }: { event: WeddingEvent; featured?:
 }
 
 export function EventsSection() {
-  return <section className="content-section events-section"><SectionHeading title="THE WEDDING CELEBRATIONS" subtitle="Join us in celebrating love, laughter, and togetherness." /><div className="events-grid">{weddingConfig.events.map((event) => <EventCard key={event.id} event={event} featured={event.id === "varmala"} />)}</div></section>;
+  return <section className="content-section events-section"><SectionHeading title="THE WEDDING CELEBRATIONS" subtitle="Join us in celebrating love, laughter, and togetherness." /><div className="events-grid">{weddingConfig.events.map((event) => <EventCard key={event.id} event={event} />)}</div></section>;
 }
 
 export function Lightbox({ index, onClose, onChange }: { index: number; onClose: () => void; onChange: (index: number) => void }) {
