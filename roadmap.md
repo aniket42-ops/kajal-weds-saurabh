@@ -3,3 +3,5 @@
 - [x] Replace placeholder audio with an original slow wedding instrumental
 - [x] Verify mobile and desktop behavior, build health, and audio asset delivery
 - [x] Add bride and groom parents to the invitation closing section
+- [x] Add the two uploaded photos to Memories of Us
+- [x] Remove Tilak from the event list and verify the remaining calendar/venue details

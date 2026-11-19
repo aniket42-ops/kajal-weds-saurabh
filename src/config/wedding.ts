@@ -84,17 +84,6 @@ export const weddingConfig = {
       description: "A beautiful family celebration filled with love, blessings, and togetherness.",
     },
     {
-      id: "tilak",
-      name: "Tilak",
-      date: "2026-12-14",
-      displayDate: "14 December 2026",
-      time: "2:00 PM",
-      startTime: "14:00",
-      venue: "Mayna Hotel And Banquet",
-      address: "Opposite Poonam Cinema Road, Darbhanga",
-      description: "An auspicious celebration of blessings, traditions, and family.",
-    },
-    {
       id: "varmala",
       name: "Engagement & Varmala",
       date: "2026-12-14",

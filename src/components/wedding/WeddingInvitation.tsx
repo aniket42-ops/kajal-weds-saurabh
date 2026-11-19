@@ -26,6 +26,8 @@ import mehndiImage from "@/assets/gallery-mehndi.jpg";
 import detailImage from "@/assets/gallery-details.jpg";
 import varmalaImage from "@/assets/gallery-varmala.jpg";
 import haldiImage from "@/assets/gallery-haldi.jpg";
+import familyPhotoIndoor from "@/assets/family-celebration-2026-11-17-23537.jpeg.asset.json";
+import familyPhotoOutdoor from "@/assets/family-celebration-2026-11-17-23452.jpeg.asset.json";
 
 const galleryImages = [
   { src: mehndiImage, alt: "Intricate bridal mehndi and floral jewellery" },
@@ -34,6 +36,8 @@ const galleryImages = [
   { src: haldiImage, alt: "Haldi celebration with marigolds and brass vessels" },
   { src: venueImage, alt: "Illuminated Indian wedding venue at dusk" },
   { src: floralPortrait, alt: "Ivory wedding stationery with a floral border" },
+  { src: familyPhotoIndoor.url, alt: "Kajal and Saurabh celebrating together at an indoor family gathering" },
+  { src: familyPhotoOutdoor.url, alt: "Kajal and Saurabh together during an outdoor family celebration" },
 ];
 
 const reveal = { initial: { opacity: 0, y: 26 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true, amount: 0.2 } };
@@ -262,7 +266,7 @@ export function Gallery() {
 }
 
 export function VenueSection() {
-  const main = weddingConfig.events[4];
+  const main = weddingConfig.events.find((event) => event.id === "varmala");
   if (!main) return null;
   const hotelMap = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${weddingConfig.venues.hotel.name}, ${weddingConfig.venues.hotel.address}`)}`;
   return (
